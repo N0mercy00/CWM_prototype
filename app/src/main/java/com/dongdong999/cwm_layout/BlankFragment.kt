@@ -1,68 +1,168 @@
 package com.dongdong999.cwm_layout
 
 import android.content.Context
+import android.content.Context.LOCATION_SERVICE
+import android.content.pm.PackageManager
+import android.location.GpsStatus.create
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.material.badge.BadgeDrawable.create
+import java.net.URI.create
+import java.util.jar.Manifest
 
 
 class BlankFragment : Fragment(), OnMapReadyCallback {
 
+    //구글맵 프래그먼트
+    private lateinit var googlemap: MapView
+    private lateinit var btnCurrent: Button
+    private var cameraPosition: CameraPosition? = null
 
-    private lateinit var googlemap : MapView
+    var mLocationManager: LocationManager? = null
+    var mLocationListener: android.location.LocationListener? = null
 
+    lateinit var mContext: Context
+
+    private lateinit var gMap : GoogleMap
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         var rootView = inflater.inflate(R.layout.fragment_blank, container, false)
+        btnCurrent = rootView.findViewById(R.id.btn_currentLocation)
         googlemap = rootView.findViewById(R.id.fragment1_googleMap)
         googlemap.onCreate(savedInstanceState)
         googlemap.getMapAsync(this)
+
         return rootView
     }
 
+    //지도 초기화
     override fun onMapReady(googleMap: GoogleMap) {
-        val marker = LatLng(37.568291,126.997780)
+        val marker = LatLng(37.568291, 126.997780)
         googleMap.addMarker(MarkerOptions().position(marker).title("여기"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+        gMap=googleMap
+        Log.d("TAG", "누르기전 googleMap 값은 ${googleMap.toString()} 들어간 지맵값은 ${gMap.toString()}")
+
+
+        cameraPosition = CameraPosition.builder().target(LatLng(37.568291, 126.997780))
+            .zoom(15.0F).build()
+        val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+        googleMap.moveCamera(cameraUpdate)
+
     }
+
+
+    //이게 지도 만들어 지고 나서 하는 부분
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        var location2:LatLng?=null
+
+        mLocationManager = mContext.getSystemService(LOCATION_SERVICE) as LocationManager
+        mLocationListener = object : LocationListener, android.location.LocationListener {
+
+
+
+            override fun onLocationChanged(p0: Location) {
+                var lat = 0.0
+                var lng = 0.0
+                if (p0 != null) {
+                    lat = p0.latitude
+                    lng = p0.longitude
+                    Log.d("TAG", "Lat: ${lat}, lon: ${lng}")
+                }
+                var currentLocation = LatLng(lat, lng)
+                location2=currentLocation
+                gMap!!.addMarker(MarkerOptions().position(currentLocation).title("현재위치"))
+                Log.d("TAG", "Lat: ${lat}, lon: ${lng}")
+                gMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 20f))
+            }
+
+        }
+        btnCurrent.setOnClickListener {
+            Log.d("TAG", "버튼눌림 ${gMap.toString()}")
+            if (ContextCompat.checkSelfPermission(
+                    mContext,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    mContext,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                mLocationManager!!.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    1000,
+                    30f,
+                    mLocationListener!!
+
+                )
+                Log.d("TAG", "위치 새로고침")
+
+                /*googleMap2.addMarker(MarkerOptions().position(location2!!).title("현재위치"))
+                googleMap2.animateCamera(CameraUpdateFactory.newLatLngZoom(location2, 15f))*/
+            }
+
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         googlemap.onStart()
     }
+
     override fun onStop() {
         super.onStop()
         googlemap.onStop()
     }
+
     override fun onResume() {
         super.onResume()
         googlemap.onResume()
     }
+
     override fun onPause() {
         super.onPause()
         googlemap.onPause()
     }
+
     override fun onLowMemory() {
         super.onLowMemory()
         googlemap.onLowMemory()
     }
+
     override fun onDestroy() {
         googlemap.onDestroy()
         super.onDestroy()
     }
+
 
 }
 

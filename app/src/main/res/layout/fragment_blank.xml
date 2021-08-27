@@ -16,6 +16,15 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>
 
+
   </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_currentLocation"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:text="현위치"/>
+
+
 
 </FrameLayout>
