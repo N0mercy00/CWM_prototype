@@ -93,11 +93,11 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
         //여기다가 엑셀 연동해서 마커찍자
 
         readExel()
-        Log.d("TAG","${Excelitems[0].name}")
+        Log.d("TAG","${Excelitems[0].name}, RATE : ${Excelitems[0].rating}")
 
         for(i in 0 until Excelitems.size){
             var tempposition=LatLng(Excelitems[i].lon.toDouble(),Excelitems[i].lat.toDouble())
-            googleMap.addMarker(MarkerOptions().position(tempposition).title(Excelitems[i].name))
+            googleMap.addMarker(MarkerOptions().position(tempposition).title(Excelitems[i].name).snippet(Excelitems[i].address+"\n"+Excelitems[i].number))
         }
 
 
@@ -228,6 +228,7 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
                     var lat =""
                     var phone =""
                     var address =""
+                    var rate=0
                     //열 반복문
                     while (cellIter.hasNext()) {
                         val myCell = cellIter.next() as HSSFCell
@@ -242,14 +243,15 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
                         }else if(colno==9){
                             phone=myCell.toString()
                         }
+
                         colno++
                     }
                     //4,8번째 열을 Mutablelist에 추가
-                    Excelitems.add(Data(name,phone,lon,lat,address))
+                    Excelitems.add(Data(name,phone,lon,lat,address,rate))
                 }
                 rowno++
             }
-            Log.e("TAG", " items: " + Excelitems)
+            Log.d("TAG", " items: " + Excelitems)
         } catch (e: Exception) {
             Toast.makeText(activity, "에러 발생", Toast.LENGTH_LONG).show()
         }
