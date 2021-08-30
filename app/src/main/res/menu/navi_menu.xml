@@ -5,18 +5,18 @@
         android:id="@+id/first"
         android:enabled="true"
         android:icon="@drawable/ic_iconmap2"
-        android:title="첫번째"
+        android:title="지도"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/second"
         android:icon="@drawable/ic_iconstore"
-        android:title="두번째"
+        android:title="매장"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/third"
         android:enabled="true"
         android:icon="@drawable/ic_iconcard"
-        android:title="세번째"
+        android:title="잔액조회"
         app:showAsAction="ifRoom" />
 </menu>
 
