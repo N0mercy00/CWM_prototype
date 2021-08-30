@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "817177178385",
+    "project_id": "cwmtest-e3928",
+    "storage_bucket": "cwmtest-e3928.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817177178385:android:f5389df115a84c88409cb0",
+        "android_client_info": {
+          "package_name": "com.dongdong999.cwm_layout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817177178385-v8vjueon2g5s312f455jj9l2uek0a02a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGd1Nz2gSEwqeRVH-4HhaC2iuDyLz3CsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817177178385-v8vjueon2g5s312f455jj9l2uek0a02a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
