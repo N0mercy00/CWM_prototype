@@ -21,9 +21,16 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_currentLocation"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
         android:text="현위치"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_logout"
+        android:layout_marginTop="60dp"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="LOGOUT"/>
 
 
 

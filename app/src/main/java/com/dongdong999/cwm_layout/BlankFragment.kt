@@ -2,6 +2,7 @@ package com.dongdong999.cwm_layout
 
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -22,6 +23,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.apache.poi.hssf.usermodel.HSSFCell
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -31,10 +35,11 @@ import com.dongdong999.cwm_layout.Data as Data
 
 
 class BlankFragment : Fragment(), OnMapReadyCallback {
-
+    private var auth : FirebaseAuth? = null
     //구글맵 프래그먼트
     private lateinit var googlemap: MapView
     private lateinit var btnCurrent: Button
+    private lateinit var btnLogout :Button
     private var cameraPosition: CameraPosition? = null
 
     var currentLocation : LatLng? = null
@@ -60,9 +65,12 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         var rootView = inflater.inflate(R.layout.fragment_blank, container, false)
         btnCurrent = rootView.findViewById(R.id.btn_currentLocation)
+        btnLogout = rootView.findViewById(R.id.btn_logout)
         googlemap = rootView.findViewById(R.id.fragment1_googleMap)
         googlemap.onCreate(savedInstanceState)
         googlemap.getMapAsync(this)
+
+        auth = Firebase.auth
 
         readExel()
 
@@ -134,6 +142,16 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
                 Log.d("TAG", "Lat: ${lat}, lon: ${lng}")
                 gMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 20f))
             }
+
+        }
+
+        btnLogout.setOnClickListener {
+
+            var intent:Intent = Intent(activity,LoginActivity::class.java)
+            startActivity(intent)
+
+            auth?.signOut()
+           // activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
 
         }
         btnCurrent.setOnClickListener {

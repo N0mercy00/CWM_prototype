@@ -3,6 +3,7 @@ package com.dongdong999.cwm_layout
 import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.dongdong999.cwm_layout.databinding.ActivityMainBinding
@@ -13,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     private val blankFragment by lazy { BlankFragment() }
     private val blankFragment2 by lazy { BlankFragment2() }
     private val blankFragment3 by lazy { BlankFragment3() }
+
+
 
 
 
