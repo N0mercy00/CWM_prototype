@@ -29,5 +29,6 @@ class Holder(val binding: ItemRecyclerBinding ):RecyclerView.ViewHolder(binding.
         binding.recyclerItemName.text="${data.name}"
         binding.recyclerItemPhone.text="${data.number}"
         binding.recyclerItemAddress.text="${data.address}"
+        binding.recyclerItemRating.text="${data.rating}"
     }
 }

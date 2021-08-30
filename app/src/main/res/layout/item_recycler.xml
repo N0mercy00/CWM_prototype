@@ -18,11 +18,22 @@
             android:id="@+id/recyclerItem_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:text="동제 손 막국수 "
             android:textColor="#222222"
             android:textSize="15dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/recyclerItem_rating"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="5.0"
+            android:textStyle="bold"
+            android:textColor="#FFC107"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
