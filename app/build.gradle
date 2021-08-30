@@ -7,7 +7,9 @@ plugins {
 android {
     compileSdk 31
 
-
+    buildFeatures{
+        viewBinding true
+    }
     defaultConfig {
         applicationId "com.dongdong999.cwm_layout"
         minSdk 21
