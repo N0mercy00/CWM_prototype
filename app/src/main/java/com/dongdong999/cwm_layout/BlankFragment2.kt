@@ -67,7 +67,7 @@ class BlankFragment2 : Fragment() {
                 val dialogRatingBar = dialogView.findViewById<RatingBar>(R.id.dialogRb)
                 builder.setView(dialogView).setPositiveButton("확인"){
                     dialogInterface,i->
-                    data[position].rating=dialogRatingBar.rating.toInt()
+                    data[position].rating=dialogRatingBar.rating.toFloat()
                     adapter.notifyDataSetChanged()
                 }
                     .setNegativeButton("취소"){dialogInterface,i->}
@@ -122,7 +122,7 @@ class BlankFragment2 : Fragment() {
                     var lat =""
                     var phone =""
                     var address =""
-                    var rate=0
+                    var rate=0F
                     //열 반복문
                     while (cellIter.hasNext()) {
                         val myCell = cellIter.next() as HSSFCell
@@ -141,7 +141,7 @@ class BlankFragment2 : Fragment() {
                         colno++
                     }
                     //4,8번째 열을 Mutablelist에 추가
-                    Excelitems.add(Data(name,phone,lon,lat,address,rate,0))
+                    Excelitems.add(Data(name,phone,lon,lat,address,rate))
                 }
                 rowno++
             }

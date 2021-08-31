@@ -246,7 +246,7 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
                     var lat =""
                     var phone =""
                     var address =""
-                    var rate=0
+                    var rate:Float = 0F
                     //열 반복문
                     while (cellIter.hasNext()) {
                         val myCell = cellIter.next() as HSSFCell
@@ -265,7 +265,7 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
                         colno++
                     }
                     //4,8번째 열을 Mutablelist에 추가
-                    Excelitems.add(Data(name,phone,lon,lat,address,rate,0))
+                    Excelitems.add(Data(name,phone,lon,lat,address,rate))
                 }
                 rowno++
             }
