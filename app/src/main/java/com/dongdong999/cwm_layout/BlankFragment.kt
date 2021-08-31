@@ -265,7 +265,7 @@ class BlankFragment : Fragment(), OnMapReadyCallback {
                         colno++
                     }
                     //4,8번째 열을 Mutablelist에 추가
-                    Excelitems.add(Data(name,phone,lon,lat,address,rate))
+                    Excelitems.add(Data(name,phone,lon,lat,address,rate,0))
                 }
                 rowno++
             }

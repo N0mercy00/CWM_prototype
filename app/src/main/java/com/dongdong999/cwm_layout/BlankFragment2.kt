@@ -1,14 +1,18 @@
 package com.dongdong999.cwm_layout
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dongdong999.cwm_layout.databinding.FragmentBlank2Binding
+import com.dongdong999.cwm_layout.databinding.ItemRecyclerBinding
 import org.apache.poi.hssf.usermodel.HSSFCell
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -20,10 +24,14 @@ class BlankFragment2 : Fragment() {
     var Excelitems: MutableList<Data> = mutableListOf()
     lateinit var binding: FragmentBlank2Binding
 
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         binding= FragmentBlank2Binding.inflate(inflater,container,false)
         return binding.root
@@ -37,7 +45,46 @@ class BlankFragment2 : Fragment() {
         adapter.listData=data
         binding.recyclerViewList.adapter=adapter
         binding.recyclerViewList.layoutManager=LinearLayoutManager(activity)
+
+
+
+        //안됨 자꾸 null참조
+       /* var rating = view.findViewById<TextView>(R.id.recyclerItem_rating)
+        rating?.setOnClickListener {
+            Log.d("TAG","일단눌림림")
+       }*/
+
+        adapter.setItemClickListener(object:CustomAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                //여기에 클릭시 이벤트
+
+                Log.d("TAG"," 난 눌리고있음-> 이름 : ${data[position].name} 별점 : ${data[position].rating}")
+                Toast.makeText(activity,"its work",Toast.LENGTH_SHORT).show()
+
+                val builder = AlertDialog.Builder(activity)
+                val dialogView = layoutInflater.inflate(R.layout.rating_layout,null)
+                //val dialogText = dialogView.findViewById<EditText>(R.id.dialogEt)
+                val dialogRatingBar = dialogView.findViewById<RatingBar>(R.id.dialogRb)
+                builder.setView(dialogView).setPositiveButton("확인"){
+                    dialogInterface,i->
+                    data[position].rating=dialogRatingBar.rating.toInt()
+                    adapter.notifyDataSetChanged()
+                }
+                    .setNegativeButton("취소"){dialogInterface,i->}
+                    .show()
+               // adapter.notifyDataSetChanged()
+            }
+        })
+
+
+
+
+
+
+
     }
+
+
 
     //엑셀읽기기
    fun readExel(): MutableList<Data> {
@@ -94,7 +141,7 @@ class BlankFragment2 : Fragment() {
                         colno++
                     }
                     //4,8번째 열을 Mutablelist에 추가
-                    Excelitems.add(Data(name,phone,lon,lat,address,rate))
+                    Excelitems.add(Data(name,phone,lon,lat,address,rate,0))
                 }
                 rowno++
             }
